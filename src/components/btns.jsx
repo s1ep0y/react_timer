@@ -1,14 +1,14 @@
-import React from 'react'
-import { Button } from 'antd';
+import React from 'react';
+import {Button} from 'antd';
 
 export class Btns extends React.Component {
     startOrStop = () => {
-        console.log('start or stop')
-    }
+        console.log('start or stop');
+    };
 
     clearTime = () => {
-        console.log('clear')
-    }
+        console.log('clear');
+    };
 
     render() {
         return (
@@ -20,6 +20,6 @@ export class Btns extends React.Component {
                     Clear
                 </Button>
             </div>
-        )
+        );
     }
 }
