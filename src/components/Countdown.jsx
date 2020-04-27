@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Input, Slider } from 'antd';
-import "antd/dist/antd.css";
+
 
 export class Countdown extends React.Component {
     constructor(props){
@@ -22,12 +22,14 @@ export class Countdown extends React.Component {
                 <div className="group">
                     <label>
                         <Input type="number"
+                        disabled={disabled}
                         max={43200}
                         placeholder="munutes"
                         />
                     </label>
                     <label>
                         <Input type="number"
+                        disabled={disabled}
                         max={720}
                         placeholder="seconds"
                         />
