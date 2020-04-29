@@ -23,17 +23,17 @@ export class Countdown extends React.Component {
         console.log('clear');
     };
 
-    sliderHandler = (val) => this.setState({ time: val });
+    sliderHandler = (value) => this.setState({ time: value });
 
-    secondsHandler = (val) => {
+    secondsHandler = ({ target: { value } })  => {
         const { maxTime, time } = this.state;
-        const newTime = (time+val) > maxTime ? maxTime : (time+val);
+        const newTime = (time+value) > maxTime ? maxTime : (time+value);
         this.setState({ time: newTime });
     }
 
-    minutesHandler = (val) => {
+    minutesHandler = ({ target: { value } })  => {
         const { maxTime, time } = this.state;
-        const newTime = (time+val*60) > maxTime ? maxTime : (time+val*60);
+        const newTime = (time+value*60) > maxTime ? maxTime : (time+value*60);
         this.setState ({ time: newTime });
     }
     
