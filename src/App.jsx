@@ -19,7 +19,6 @@ function App() {
           2nd tab
         </TabPane>
       </Tabs>
-      <Btns />
     </div>
   );
 }

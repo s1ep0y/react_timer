@@ -2,21 +2,15 @@ import React from 'react';
 import {Button} from 'antd';
 
 export class Btns extends React.Component {
-    startOrStop = () => {
-        console.log('start or stop');
-    };
-
-    clearTime = () => {
-        console.log('clear');
-    };
-
     render() {
+        const { startOrStop, clearTime } = this.props;
+        
         return (
             <div>
-                <Button type="primary" onClick={this.startOrStop}>
+                <Button type="primary" onClick={startOrStop}>
                     Start/Stop
                 </Button>
-                <Button type="dashed" onClick={this.clearTime}>
+                <Button type="dashed" onClick={clearTime}>
                     Clear
                 </Button>
             </div>

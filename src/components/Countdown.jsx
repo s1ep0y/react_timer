@@ -1,47 +1,54 @@
 import React, { useState } from 'react';
-import { TimerSlider, TimerInputs } from './timerInputs'
+import { TimerParams } from './TimerParams'
+import { Btns } from './btns';
 
 
 export class Countdown extends React.Component {
+
     constructor(props){
-        super(props)
-        this.state = {
-            disabled: false,
-            timerTime: null,
+        super(props);
+        this.state={
+            time: 0,
+            maxTime: 43200,
         }
     }
 
-    // sliderHolder = (value) => {
-    //     // console.log(value);
-    //     const mins = Math.floor(value/60)
-    //     const secs = value/60 > 0 ? value%60 : 0
-    //     this.setState({
-    //         timerTime: {
-    //             secs, mins
-    //         },
-    //     })
-    // }
+    startOrStop = () => {
+        const { time } = this.state;
+        console.log('start or stop');
+        console.log(time)
+    };
 
-    // minsHolder = ({target: {value}}) => {
-        
-    //     this.setState({ timerTime: { mins: value } });
-    //     console.log(this.state.timerTime)
-    // }
+    clearTime = () => {
+        console.log('clear');
+    };
 
-    // secsHolder = ({target: {value}}) => {
-        
-    //     this.setState({ timerTime: { secs: value } });
-    // }
+    sliderHandler = (val) => this.setState({ time: val });
 
+    secondsHandler = (val) => {
+        const { maxTime, time } = this.state;
+        const newTime = (time+val) > maxTime ? maxTime : (time+val);
+        this.setState({ time: newTime });
+    }
 
+    minutesHandler = (val) => {
+        const { maxTime, time } = this.state;
+        const newTime = (time+val*60) > maxTime ? maxTime : (time+val*60);
+        this.setState ({ time: newTime });
+    }
+    
 
     render() {
-        const { disabled } = this.state;
+        const { time } = this.state;
         return(
             <div className="countdown">
-                <span>Seconds</span>
-                <TimerSlider disabled={disabled}/>
-                <TimerInputs disabled={disabled}/>
+                <TimerParams
+                    time={time}
+                    secondsHandler={this.secondsHandler}
+                    minutesHandler={this.minutesHandler}
+                    sliderHandler={this.sliderHandler}
+                />
+                <Btns startOrStop={this.startOrStop} clearTime={this.clearTime}/>
             </div>
         )
 
