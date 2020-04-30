@@ -1,7 +1,8 @@
 import React from 'react';
 import { Input, Slider } from 'antd';
+import PropTypes from 'prop-types';
 
-export const TimerParams = ({ sliderHandler, time = null, minutesHandler, secondsHandler, disabled }) => (
+export const CountdownParams = ({ sliderHandler, time, minutesHandler, secondsHandler, disabled }) => (
     <div className="TimerParams">
         <span>max: 720 minutes</span>
         <Slider
@@ -38,3 +39,20 @@ export const TimerParams = ({ sliderHandler, time = null, minutesHandler, second
         </div>
     </div>
 )
+
+// sliderHandler, time = null, minutesHandler, secondsHandler, disabled
+CountdownParams.defaultProps = {
+    sliderHandler: () => {},
+    minutesHandler: () => {},
+    secondsHandler: () => {},
+    time: 0,
+    disabled: false,
+}
+
+CountdownParams.propTypes= {
+    sliderHandler: PropTypes.func,
+    minutesHandler: PropTypes.func,
+    secondsHandler: PropTypes.func,
+    time: PropTypes.number,
+    disabled: PropTypes.bool,
+}

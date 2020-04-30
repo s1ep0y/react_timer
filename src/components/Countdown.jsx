@@ -1,5 +1,5 @@
 import React from 'react';
-import { TimerParams } from './TimerParams'
+import { CountdownParams } from './CountdownParams'
 import { Btns } from './btns';
 import { Progress } from 'antd'
 
@@ -65,7 +65,7 @@ export class Countdown extends React.Component {
         console.log(time > 0)
         return(
             <div className="countdown">
-                <TimerParams
+                <CountdownParams
                     disabled={timerState}
                     time={time}
                     secondsHandler={this.secondsHandler}

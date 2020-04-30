@@ -1,5 +1,5 @@
 import React from 'react';
-import { TimerParams } from './TimerParams'
+import { TimerParams } from './CountdownParams'
 import { Btns } from './btns';
 
 
