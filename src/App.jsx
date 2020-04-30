@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import { Btns } from './components/btns';
 import { Countdown } from './components/Countdown';
 import { Tabs } from 'antd';
 import "antd/dist/antd.css";
