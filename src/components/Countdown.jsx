@@ -1,6 +1,7 @@
 import React from 'react';
 import { TimerParams } from './TimerParams'
 import { Btns } from './btns';
+import { Progress } from 'antd'
 
 
 export class Countdown extends React.Component {
@@ -72,7 +73,8 @@ export class Countdown extends React.Component {
                     sliderHandler={this.sliderHandler}
                 />
                 <Btns disabled={!(time > 0)} startOrStop={this.startOrStop} clearTime={this.clearTime}/>
-                <span>place for timer time</span>
+                <h3>place for countdown time</h3>
+                <Progress type="circle" />
             </div>
         );
 
