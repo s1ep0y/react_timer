@@ -4,7 +4,6 @@ import { Btns } from './btns';
 
 
 export class Countdown extends React.Component {
-
     constructor(props){
         super(props);
         this.state={
@@ -16,25 +15,24 @@ export class Countdown extends React.Component {
 
     startOrStop = () => {
         const { timerState } = this.state;
-        this.setState({ timerState: !timerState })
-    };
+        this.setState({ timerState: !timerState });
+    }
 
     clearTime = () => {
         const { timerState } = this.state;
         if(timerState) {
             this.setState({ timerState: false });
-            return
+            return;
         }
         this.setState({
             minutes: 0,
             seconds: 0,
-        })
+        });
     };
 
     
     sliderHandler = (value) => {
-        console.log(value)
-        const mins = Math.floor(value/60)
+        const mins = Math.floor(value/60);
         const secs = value%60;
         this.setState({ minutes: mins, seconds: secs });
     }
@@ -74,9 +72,10 @@ export class Countdown extends React.Component {
                     sliderHandler={this.sliderHandler}
                 />
                 <Btns disabled={!(time > 0)} startOrStop={this.startOrStop} clearTime={this.clearTime}/>
+                <span>place for timer time</span>
             </div>
-        )
+        );
 
     }
-}
+};
 // 
