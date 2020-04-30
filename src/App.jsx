@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import { Countdown } from './components/Countdown';
+import { Timer } from './components/Timer';
 import { Tabs } from 'antd';
 import "antd/dist/antd.css";
 
@@ -15,7 +16,7 @@ function App() {
           <Countdown />
         </TabPane>
         <TabPane tab="Tab 2" key="2">
-          2nd tab
+          <Timer />
         </TabPane>
       </Tabs>
     </div>
