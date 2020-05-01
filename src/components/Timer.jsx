@@ -1,35 +1,77 @@
 import React from 'react';
-import { TimerParams } from './CountdownParams'
-import { Btns } from './btns';
-
+import {Btns} from './btns';
 
 export class Timer extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            minutes: 0,
-            seconds: 0,
-            timerState: false,
+        this.state = {
+            time: 0,
+            timerState: false
         }
     }
 
-    startOrStop = () => {
-        const { timerState } = this.state;
-        this.setState({ timerState: !timerState });
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
 
+    clearTime = () => {
+        const {timerState} = this.state;
+        if (timerState === true) {
+            clearInterval(this.timerId)
+            this.setState({timerState: false});
+            return;
+        }
+        this.setState({time: 0});
+    };
+
+    startOrStop = () => {
+        // const timerId = this.timerId;
+        const {timerState} = this.state;
+
+        if (timerState === false) {
+            this.timerId = setInterval(() => {
+                const {time} = this.state;
+                this.setState({
+                    time: time + 10
+                })
+            }, 10);
+            console.log('start')
+        } else {
+            clearInterval(this.timerId)
+            console.log(timerState)
+            console.log('stop')
+        }
+
+        this.setState({
+            timerState: !timerState
+        });
+    }
+
+    timerOutput = () => {
+        const {time} = this.state;
+        const miliSeconds = time % 1000;
+        const seconds = Math.floor(time / 1000);
+        const minutes = Math.floor(time / 60000);
+        return `${minutes} : ${seconds} : ${miliSeconds}`;
+    };
 
     render() {
-        const { minutes, seconds, timerState } = this.state;
-        const time = Number(minutes * 60 + seconds)
-        console.log(time > 0)
-        return(
-            <div className="countdown">
-                <Btns disabled={!(time > 0)} startOrStop={this.startOrStop} clearTime={this.clearTime}/>
-                <span>place for timer time</span>
+        const {time} = this.state;
+        return (
+            <div className="timer">
+                <Btns
+                    disabled={false}
+                    startOrStop={this.startOrStop}
+                    clearTime={this.clearTime}/> {
+                    time > 0
+                        ? <div>
+                                <p>{this.timerOutput()}</p>
+                            </div>
+                        : null
+                }
             </div>
         );
 
     }
 };
-// 
+//
