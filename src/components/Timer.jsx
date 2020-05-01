@@ -11,7 +11,7 @@ export class Timer extends React.Component {
     }
 
     componentWillUnmount() {
-        clearInterval(this.interval);
+        clearInterval(this.timerId);
     }
 
     clearTime = () => {
@@ -25,7 +25,6 @@ export class Timer extends React.Component {
     };
 
     startOrStop = () => {
-        // const timerId = this.timerId;
         const {timerState} = this.state;
 
         if (timerState === false) {
@@ -35,11 +34,8 @@ export class Timer extends React.Component {
                     time: time + 10
                 })
             }, 10);
-            console.log('start')
         } else {
             clearInterval(this.timerId)
-            console.log(timerState)
-            console.log('stop')
         }
 
         this.setState({
@@ -49,6 +45,7 @@ export class Timer extends React.Component {
 
     timerOutput = () => {
         const {time} = this.state;
+        console.log(time)
         const miliSeconds = time % 1000;
         const seconds = Math.floor(time / 1000);
         const minutes = Math.floor(time / 60000);
@@ -62,13 +59,11 @@ export class Timer extends React.Component {
                 <Btns
                     disabled={false}
                     startOrStop={this.startOrStop}
-                    clearTime={this.clearTime}/> {
-                    time > 0
-                        ? <div>
+                    clearTime={this.clearTime}/> 
+                    { time > 0 ? <div>
                                 <p>{this.timerOutput()}</p>
                             </div>
-                        : null
-                }
+                        : null }
             </div>
         );
 

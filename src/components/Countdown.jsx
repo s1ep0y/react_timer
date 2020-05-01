@@ -11,30 +11,58 @@ export class Countdown extends React.Component {
             minutes: 0,
             seconds: 0,
             timerState: false,
+            time: 0,
+            timeNow: 0,
+            
         }
     }
 
-    startOrStop = () => {
-        const { timerState } = this.state;
-        this.setState({ timerState: !timerState });
+    componentWillUnmount() {
+        clearInterval(this.timerId);
     }
 
     clearTime = () => {
-        const { timerState } = this.state;
-        if(timerState) {
-            this.setState({ timerState: false });
+        const {timerState} = this.state;
+        if (timerState === true) {
+            clearInterval(this.timerId)
+            this.setState({timerState: false});
             return;
         }
-        this.setState({
-            minutes: 0,
-            seconds: 0,
-        });
+        this.setState({time: 0, timeNow: 0, });
     };
 
+    timeSetter(){
+        const { seconds, minutes, timeNow } = this.state;
+        const time = seconds + minutes*60;
+        this.setState({
+            time: time*1000, timeNow: timeNow === 0 ? time*1000 : timeNow,
+        })
+    }
+
+    startOrStop = () => {
+        const {timerState} = this.state;
+        this.timeSetter()
+        if (timerState === false) {
+            this.timerId = setInterval(() => {
+                const { timeNow } = this.state;
+                if(timeNow - 10 === 0) clearInterval(this.timerId);
+                this.setState({
+                    timeNow: timeNow - 10
+                })
+            }, 10);
+        } else {
+            clearInterval(this.timerId)
+        }
+
+        this.setState({
+            timerState: !timerState
+        });
+    }
     
     sliderHandler = (value) => {
         const mins = Math.floor(value/60);
         const secs = value%60;
+        if(mins >= 60) return;
         this.setState({ minutes: mins, seconds: secs });
     }
 
@@ -57,12 +85,26 @@ export class Countdown extends React.Component {
         };
         let returnValue = val > 60 ? 60: val === 0 ? null : val;
         this.setState({ seconds: returnValue !== 0 ? returnValue : null })
-    }    
+    }
+    
+    timerOutput = () => {
+        const { timeNow } = this.state;
+        console.log(timeNow)
+        const miliSeconds = timeNow % 1000;
+        const seconds = Math.floor(timeNow / 1000);
+        const minutes = Math.floor(timeNow / 60000);
+        return `${minutes} : ${seconds} : ${miliSeconds}`;
+    };
+
+    percentCalc = () => {
+        const { time , timeNow } = this.state;
+        return Math.floor( 100/time*timeNow )
+    }
 
     render() {
         const { minutes, seconds, timerState } = this.state;
         const time = Number(minutes * 60 + seconds)
-        console.log(time > 0)
+        console.log('reset')
         return(
             <div className="countdown">
                 <CountdownParams
@@ -73,8 +115,11 @@ export class Countdown extends React.Component {
                     sliderHandler={this.sliderHandler}
                 />
                 <Btns disabled={!(time > 0)} startOrStop={this.startOrStop} clearTime={this.clearTime}/>
-                <h3>place for countdown time</h3>
-                <Progress type="circle" />
+                {  <div>
+                                <p>{this.timerOutput()}</p>
+                            </div>
+                        }
+                <Progress type="circle" percent={this.percentCalc()} />
             </div>
         );
 
