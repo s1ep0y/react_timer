@@ -5,7 +5,7 @@ import { Button } from 'antd';
 const Btns = (props) => {
   const { startOrStop, clearTime, disabled } = props;
   return (
-    <div>
+    <div className="buttons">
       <Button type="primary" disabled={disabled} onClick={startOrStop}>
         Start/Stop
       </Button>

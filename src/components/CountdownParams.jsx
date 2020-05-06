@@ -11,7 +11,7 @@ const CountdownParams = ({
   secondsHandler,
   disabled,
 }) => (
-  <div className="TimerParams">
+  <div className="countdownTimer">
     <span>max: 720 minutes</span>
     <Slider
       defaultValue={30}
@@ -23,31 +23,27 @@ const CountdownParams = ({
       disabled={disabled}
     />
     <div>
-      <label>
-        <Input
-          name="munutes"
-          value={minutes || null}
-          placeholder="munutes"
-          onChange={minutesHandler}
-          disabled={disabled}
-        />
-      </label>
-      <label>
-        seconds
-        <Input
-          type="number"
-          name="seconds"
-          value={seconds || null}
-          placeholder="seconds"
-          onChange={secondsHandler}
-          disabled={disabled}
-        />
-      </label>
+      <span>minutes</span>
+      <Input
+        name="munutes"
+        value={minutes || null}
+        placeholder="munutes"
+        onChange={minutesHandler}
+        disabled={disabled}
+      />
+      <span>seconds</span>
+      <Input
+        type="number"
+        name="seconds"
+        value={seconds || null}
+        placeholder="seconds"
+        onChange={secondsHandler}
+        disabled={disabled}
+      />
     </div>
   </div>
 );
 
-// sliderHandler, time = null, minutesHandler, secondsHandler, disabled
 CountdownParams.defaultProps = {
   sliderHandler: () => {},
   minutesHandler: () => {},

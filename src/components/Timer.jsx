@@ -1,5 +1,5 @@
 import React from 'react';
-import Btns from './btns';
+import Btns from './Btns';
 
 export default class Timer extends React.Component {
   constructor(props) {
