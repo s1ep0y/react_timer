@@ -157,7 +157,7 @@ export default class Countdown extends React.Component {
         },
       } = this.state;
 
-      if ( val >= 720) {
+      if (val >= 720) {
         this.setState({
           inputs: {
             seconds: 0,
