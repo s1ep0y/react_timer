@@ -232,7 +232,7 @@ export default class Countdown extends React.Component {
         },
       } = this.state;
       const miliSeconds = timeNow % 100;
-      const seconds = Math.floor(timeNow % 6000);
+      const seconds = Math.floor((timeNow % 600) / 10);
       const minutes = Math.floor(timeNow / 600);
       return `${minutes} : ${seconds} : ${miliSeconds}`;
     };
@@ -244,8 +244,9 @@ export default class Countdown extends React.Component {
           timeNow,
         },
       } = this.state;
-      const res = Math.floor((timeAll - timeNow) / timeAll);
-      return res * 100;
+      if (timeAll === 0) return 0;
+      const res = (((timeAll - timeNow) / timeAll) * 100).toFixed(1);
+      return res;
     };
 
     render() {
