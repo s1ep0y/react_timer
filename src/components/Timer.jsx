@@ -45,7 +45,7 @@ export default class Timer extends React.Component {
 
   timerOutput = () => {
     const { time } = this.state;
-    const miliSeconds = String(time % 1000);
+    const miliSeconds = String((time % 1000));
     const seconds = String(Math.floor(time / 1000));
     const minutes = String(Math.floor(time / 60000));
     return `${minutes.length === 1 ? `0${minutes}` : minutes} : ${seconds.length === 1 ? `0${seconds}` : seconds} : ${miliSeconds.length === 1 ? `0${miliSeconds}` : miliSeconds}`;
@@ -57,8 +57,8 @@ export default class Timer extends React.Component {
       <div className="timer">
         <Btns disabled={false} startOrStop={this.startOrStop} clearTime={this.clearTime} />
         {time > 0 ? (
-          <div>
-            <p>{this.timerOutput()}</p>
+          <div className="timer__textOutput">
+            <span>{this.timerOutput()}</span>
           </div>
         ) : null}
       </div>

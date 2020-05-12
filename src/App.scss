@@ -17,14 +17,11 @@
   &__inputs {
     justify-content: space-between;
     display: flex;
-
-    span {
-      margin: 12px;
-    }
+    margin-bottom: 12px;
   }
 
   &__textOutput {
-    margin: 24px;
+    margin: 12px;
 
     span {
       border: 1px solid black;
@@ -35,8 +32,17 @@
 }
 
 .buttons {
+  padding: 12px;
+}
 
-  button {
+.timer {
+
+  &__textOutput {
     margin: 12px;
+
+    span {
+      padding: 4px 8px;
+      border-radius: 3px;
+    }
   }
 }

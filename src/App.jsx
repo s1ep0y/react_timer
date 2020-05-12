@@ -13,11 +13,11 @@ function App() {
   return (
     <div className="App">
       <Tabs defaultActiveKey="1">
-        <TabPane tab="Tab 1" key="1">
-          <Countdown />
-        </TabPane>
-        <TabPane tab="Tab 2" key="2">
+        <TabPane tab="Timer" key="1">
           <Timer />
+        </TabPane>
+        <TabPane tab="Countdown" key="2">
+          <Countdown />
         </TabPane>
       </Tabs>
     </div>
