@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 
 const CountdownParams = ({
   sliderHandler,
-  minutes,
-  seconds,
-  slider,
+  time,
   minutesHandler,
   secondsHandler,
   disabled,
@@ -18,7 +16,7 @@ const CountdownParams = ({
       step={15}
       min={0}
       max={3600}
-      value={slider}
+      value={time || null}
       onChange={sliderHandler}
       disabled={disabled}
     />
@@ -26,7 +24,8 @@ const CountdownParams = ({
       <span>minutes</span>
       <Input
         name="munutes"
-        value={minutes || null}
+        type="number"
+        value={time ? Math.floor(time / 60) : null}
         placeholder="munutes"
         onChange={minutesHandler}
         disabled={disabled}
@@ -35,7 +34,7 @@ const CountdownParams = ({
       <Input
         type="number"
         name="seconds"
-        value={seconds || null}
+        value={time || null}
         placeholder="seconds"
         onChange={secondsHandler}
         disabled={disabled}
@@ -48,9 +47,7 @@ CountdownParams.defaultProps = {
   sliderHandler: () => {},
   minutesHandler: () => {},
   secondsHandler: () => {},
-  minutes: 0,
-  seconds: 0,
-  slider: 0,
+  time: 0,
   disabled: false,
 };
 
@@ -58,9 +55,7 @@ CountdownParams.propTypes = {
   sliderHandler: PropTypes.func,
   minutesHandler: PropTypes.func,
   secondsHandler: PropTypes.func,
-  minutes: PropTypes.number,
-  seconds: PropTypes.number,
-  slider: PropTypes.number,
+  time: PropTypes.number,
   disabled: PropTypes.bool,
 };
 

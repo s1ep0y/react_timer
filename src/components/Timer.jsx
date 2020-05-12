@@ -45,10 +45,10 @@ export default class Timer extends React.Component {
 
   timerOutput = () => {
     const { time } = this.state;
-    const miliSeconds = time % 1000;
-    const seconds = Math.floor(time / 1000);
-    const minutes = Math.floor(time / 60000);
-    return `${minutes} : ${seconds} : ${miliSeconds}`;
+    const miliSeconds = String(time % 1000);
+    const seconds = String(Math.floor(time / 1000));
+    const minutes = String(Math.floor(time / 60000));
+    return `${minutes.length === 1 ? `0${minutes}` : minutes} : ${seconds.length === 1 ? `0${seconds}` : seconds} : ${miliSeconds.length === 1 ? `0${miliSeconds}` : miliSeconds}`;
   };
 
   render() {

@@ -2,21 +2,17 @@ import React from 'react';
 import { Progress } from 'antd';
 import CountdownParams from './CountdownParams';
 import Btns from './Btns';
+import sound from '../timerEnd.mp3';
 
 export default class Countdown extends React.Component {
   constructor(props) {
     super(props);
+    this.audio = React.createRef();
     this.state = {
-      inputs: {
-        minutes: 0,
-        seconds: 0,
-        slider: 0,
-      },
-      timer: {
-        timeAll: 0,
-        timeNow: 0,
-        active: false,
-      },
+      time: 0,
+      timeAll: 0,
+      timeNow: 0,
+      active: false,
     };
   }
 
@@ -25,224 +21,92 @@ export default class Countdown extends React.Component {
   }
 
     clearTime = () => {
-      const {
-        timer: {
-          active,
-          timeAll,
-          timeNow,
-        },
-      } = this.state;
+      const { active } = this.state;
       if (active === true) {
         clearInterval(this.timerId);
-        this.setState({
-          timer: {
-            active: false,
-            timeAll,
-            timeNow,
-          },
-        });
+        this.setState({ active: false });
         return;
       }
 
       this.setState({
-        inputs: {
-          minutes: 0,
-          seconds: 0,
-          slider: 0,
-        },
-        timer: {
-          time: 0,
-          timeNow: 0,
-          active,
-        },
+        time: 0,
+        timeNow: 0,
+        timeAll: 0,
       });
     };
 
     timeSetter = () => {
       const {
-        inputs: {
-          seconds,
-          minutes,
-        },
-        timer: {
-          timeNow,
-          active,
-        },
+        time,
+        timeNow,
       } = this.state;
-      const time = seconds + minutes * 60;
       this.setState({
-        timer: {
-          timeAll: time * 10,
-          timeNow: timeNow === 0
-            ? time * 10
-            : timeNow,
-          active,
-        },
+        timeAll: time,
+        timeNow: timeNow === 0
+          ? time
+          : timeNow,
       });
     };
 
+    timerStep = () => {
+      this.setState((prevState) => ({ timeNow: prevState.timeNow - 1 }));
+    }
+
     startOrStop = () => {
       this.timeSetter();
-      const {
-        timer: {
-          active,
-        },
-      } = this.state;
+      const { active } = this.state;
       if (active === false) {
         this.timerId = setInterval(() => {
-          const {
-            timer: {
-              timeAll,
-              timeNow,
-            },
-          } = this.state;
-          if (timeNow - 1 === -1) {
+          const { timeNow } = this.state;
+          if (timeNow === 0) {
             clearInterval(this.timerId);
             this.setState({
-              timer: {
-                active: false,
-                timeAll,
-                timeNow: 0,
-              },
+              active: false,
             });
+            const audio = new Audio(sound);
+            audio.play();
             return;
           }
-          this.setState({
-            timer: {
-              active: true,
-              timeAll,
-              timeNow: timeNow - 1,
-            },
-          });
-        }, 100);
+          this.timerStep();
+        }, 1000);
+        this.setState({ active: true });
       } else {
-        const {
-          timer: {
-            timeAll,
-            timeNow,
-          },
-        } = this.state;
         clearInterval(this.timerId);
         this.setState({
-          timer: {
-            active: false,
-            timeAll,
-            timeNow,
-          },
+          active: false,
         });
       }
     };
 
     sliderHandler = (value) => {
-      const minutes = Math.floor(value / 60);
-      const seconds = value % 60;
       this.setState({
-        inputs: {
-          slider: value,
-          minutes,
-          seconds,
-        },
+        time: value,
       });
     };
 
-    minutesHandler = ({
-      target: {
-        value,
-      },
-    }) => {
-      const val = Number(value);
-      const {
-        inputs: {
-          seconds,
-        },
-      } = this.state;
-
-      if (val >= 720) {
-        this.setState({
-          inputs: {
-            seconds: 0,
-            minutes: 720,
-            slider: 3600,
-          },
-        });
-        return;
-      }
-      const sum = val * 60 + seconds;
-      const slider = sum > 3600
-        ? 3600
-        : sum;
-      this.setState({
-        inputs: {
-          minutes: val,
-          seconds,
-          slider,
-        },
-      });
+    minutesHandler = ({ target }) => {
+      const val = Number(target.value);
+      const time = val > 720 ? 43200 : val * 60;
+      this.setState({ time });
     };
 
     secondsHandler = ({ target }) => {
-      const {
-        inputs: {
-          minutes,
-        },
-      } = this.state;
       const val = Number(target.value);
-      const sum = minutes * 60 + val;
-      const slider = sum > 3600
-        ? 3600
-        : sum;
-
-      if (minutes === 720) {
-        this.setState({
-          inputs: {
-            seconds: val,
-            minutes: 719,
-            slider,
-          },
-        });
-        return;
-      }
-
-      if (val > 59) {
-        this.setState({
-          inputs: {
-            seconds: val % 60,
-            minutes: minutes + Math.floor(val / 60),
-            slider,
-          },
-        });
-        return;
-      }
-
-      this.setState({
-        inputs: {
-          seconds: val !== 0
-            ? val
-            : null,
-          minutes,
-          slider,
-        },
-      });
+      const time = val > 43200 ? 43200 : val;
+      this.setState({ time });
     };
 
     timerOutput = () => {
-      const {
-        timer: {
-          timeNow,
-        },
-      } = this.state;
-      const miliSeconds = timeNow % 10;
-      const seconds = Math.floor((timeNow % 600) / 10);
-      const minutes = Math.floor(timeNow / 600);
-      return `${minutes} : ${seconds} : ${miliSeconds}`;
+      const { timeNow } = this.state;
+      const seconds = String(Math.floor(timeNow % 60));
+      const minutes = String(Math.floor(timeNow / 60));
+      return `${minutes.length === 1 ? `0${minutes}` : minutes} : ${seconds.length === 1 ? `0${seconds}` : seconds} `;
     };
 
     percentCalc = () => {
       const {
-        timer: {
-          timeAll,
-          timeNow,
-        },
+        timeAll,
+        timeNow,
       } = this.state;
       if (timeAll === 0) return 0;
       const res = (((timeAll - timeNow) / timeAll) * 100).toFixed(1);
@@ -250,23 +114,10 @@ export default class Countdown extends React.Component {
     };
 
     render() {
-      const {
-        inputs: {
-          minutes,
-          seconds,
-          slider,
-        },
-        timer: {
-          timeNow,
-        },
-      } = this.state;
-      const time = Number(minutes * 60 + seconds);
+      const { time, timeNow } = this.state;
       return (
-        <div className="countdown">
+        <div className="Countdown">
           <CountdownParams
-            minutes={minutes}
-            seconds={seconds}
-            slider={slider}
             disabled={timeNow !== 0}
             time={time}
             secondsHandler={this.secondsHandler}
