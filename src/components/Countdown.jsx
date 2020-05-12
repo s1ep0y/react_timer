@@ -116,7 +116,7 @@ export default class Countdown extends React.Component {
     render() {
       const { time, timeNow } = this.state;
       return (
-        <div className="Countdown">
+        <div className="countdown">
           <CountdownParams
             disabled={timeNow !== 0}
             time={time}
@@ -129,7 +129,7 @@ export default class Countdown extends React.Component {
             startOrStop={this.startOrStop}
             clearTime={this.clearTime}
           />
-          <div>
+          <div className="countdown__textOutput">
             <span>{this.timerOutput()}</span>
           </div>
           <Progress type="circle" percent={this.percentCalc()} />

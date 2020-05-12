@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import Countdown from './components/Countdown';
 import Timer from './components/Timer';
 import { Tabs } from 'antd';

@@ -9,7 +9,7 @@ const CountdownParams = ({
   secondsHandler,
   disabled,
 }) => (
-  <div className="countdownTimer">
+  <div className="countdown__countdownParams">
     <span>max: 720 minutes</span>
     <Slider
       defaultValue={30}
@@ -20,20 +20,20 @@ const CountdownParams = ({
       onChange={sliderHandler}
       disabled={disabled}
     />
-    <div>
-      <span>minutes</span>
+    <div className="countdown__inputs">
       <Input
         name="munutes"
         type="number"
+        addonBefore="Minutes"
         value={time ? Math.floor(time / 60) : null}
         placeholder="munutes"
         onChange={minutesHandler}
         disabled={disabled}
       />
-      <span>seconds</span>
       <Input
         type="number"
         name="seconds"
+        addonBefore="Seconds"
         value={time || null}
         placeholder="seconds"
         onChange={secondsHandler}
