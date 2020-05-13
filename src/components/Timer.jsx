@@ -33,7 +33,7 @@ export default class Timer extends React.Component {
 
     if (timerState === false) {
       this.timerId = setInterval(() => {
-        this.timerStep()
+        this.timerStep();
       }, 10);
     } else {
       clearInterval(this.timerId);

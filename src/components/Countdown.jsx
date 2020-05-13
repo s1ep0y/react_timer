@@ -85,15 +85,22 @@ export default class Countdown extends React.Component {
     };
 
     minutesHandler = ({ target }) => {
-      const val = Number(target.value);
-      const time = val > 720 ? 43200 : val * 60;
-      this.setState({ time });
+      const val = Number(target.value * 60);
+      this.setState((prev) => {
+        const newTime = (prev.time % 60) + val > 43200 ? 43200 : (prev.time % 60) + val;
+        return { time: newTime };
+      });
     };
+
 
     secondsHandler = ({ target }) => {
       const val = Number(target.value);
-      const time = val > 43200 ? 43200 : val;
-      this.setState({ time });
+      this.setState((prev) => {
+        const newTime = Math.floor(prev.time / 60) + val > 43200
+          ? 43200
+          : Math.floor(prev.time / 60) + val;
+        return { time: newTime };
+      });
     };
 
     timerOutput = () => {
