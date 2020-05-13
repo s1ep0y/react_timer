@@ -24,15 +24,16 @@ export default class Timer extends React.Component {
     this.setState({ time: 0 });
   };
 
+  timerStep = () => {
+    this.setState(({ time }) => ({ time: time + 10 }));
+  }
+
   startOrStop = () => {
     const { timerState } = this.state;
 
     if (timerState === false) {
       this.timerId = setInterval(() => {
-        const { time } = this.state;
-        this.setState({
-          time: time + 10,
-        });
+        this.timerStep()
       }, 10);
     } else {
       clearInterval(this.timerId);
