@@ -87,7 +87,9 @@ export default class Countdown extends React.Component {
     minutesHandler = ({ target }) => {
       const val = Number(target.value * 60);
       this.setState((prev) => {
-        const newTime = (prev.time % 60) + val > 43200 ? 43200 : (prev.time % 60) + val;
+        const newTime = (prev.time % 60) + val > 43200
+          ? 43200
+          : (prev.time % 60) + val;
         return { time: newTime };
       });
     };
@@ -96,9 +98,10 @@ export default class Countdown extends React.Component {
     secondsHandler = ({ target }) => {
       const val = Number(target.value);
       this.setState((prev) => {
-        const newTime = Math.floor(prev.time / 60) + val > 43200
+        const oldSecs = prev.time % 60;
+        const newTime = (prev.time - oldSecs) + val > 43200
           ? 43200
-          : Math.floor(prev.time / 60) + val;
+          : (prev.time - oldSecs) + val;
         return { time: newTime };
       });
     };
